@@ -11,39 +11,38 @@ export default function App() {
 
 function Counter() {
   const [count, setCount] = useState(0);
-  const [step, setStep] = useState(0);
-
+  // const [step, setStep] = useState(1);
+  const [inputValue, setInputValue] = useState(1);
   const date = new Date("june 21 2027");
   date.setDate(date.getDate() + count);
-  const reset = () => {
+  function handleReset() {
+    setInputValue(1);
     setCount(0);
-    setStep(0);
-  };
+  }
   return (
     <div>
       <div>
         <input
           type="range"
-          min="0"
+          min="1"
           max="10"
-          value={step}
-          onChange={(e) => {
-            setStep(Number(e.target.value));
-          }}
+          value={inputValue}
+          onChange={(e) => setInputValue(Number(e.target.value))}
         />
-        <span>{step}</span>
+        {/* <button onClick={() => setInputValue((c) => c - 1)}>-</button> */}
+        <span>Step: {inputValue}</span>
+        {/* <button onClick={() => setInputValue((c) => c + 1)}>+</button> */}
       </div>
 
       <div>
-        <button onClick={() => setCount((c) => c - step)}>-</button>
+        <button onClick={() => setCount((c) => c - inputValue)}>-</button>
+        {/* <span>Count: {count}</span> */}
         <input
           type="text"
           value={count}
-          onChange={(e) => {
-            setCount(Number(e.target.value));
-          }}
+          onChange={(e) => setCount(Number(e.target.value))}
         />
-        <button onClick={() => setCount((c) => c + step)}>+</button>
+        <button onClick={() => setCount((c) => c + inputValue)}>+</button>
       </div>
 
       <p>
@@ -56,10 +55,8 @@ function Counter() {
         </span>
         <span>{date.toDateString()}</span>
       </p>
-      {step !== 0 || count !== 0 ? (
-        <div>
-          <button onClick={reset}>Reset</button>
-        </div>
+      {count !== 0 || inputValue !== 1 ? (
+        <button onClick={handleReset}>Reset</button>
       ) : null}
     </div>
   );
